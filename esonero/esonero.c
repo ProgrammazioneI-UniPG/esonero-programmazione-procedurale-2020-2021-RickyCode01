@@ -1,4 +1,4 @@
-/* esonero programmazione 1 2020 Riccardo Manoni */
+/* esonero programmazione 1 2020/2021 Riccardo Manoni */
 #include<stdio.h>
 #include<time.h>                  //per utilizzare funzione time
 #include<stdlib.h>                // per utilizzare funzione randomica
@@ -7,22 +7,38 @@
 #define MAX 128                   //dimensione massima per bufferoverflow
 char buff[MAX];                   // array testo -> buffer caratteri
 char key[MAX];                    // array int -> chiave generata
+char C[MAX];                      // array chiave cifrata
 
-char keygen(){
+
+int ASCII(int num){               //funzione per togliere caratteri speciali
+  if(num <= 32){
+    num = num + 32;
+  }
+  return num;
+}
+
+void keygen(){
   time_t t;
   srand((unsigned) time(&t));
   int i;
-  for(i=0; i<(sizeof(key)); i++){
-    int random = rand()%128;
-    if(random <= 32){             //elimino i valori superiori a 32
-      random = random + 32;
-      key[i] = random;
-    }
+  printf("la chiave generata è: ");
+  for(i=1; i<strlen(buff); i++){
+    int n_rand = rand()%128;
+    n_rand = ASCII(n_rand);
+    // if(n_rand <= 32){             //elimino i valori superiori a 32
+    //   n_rand = n_rand + 32;
+    //   key[i] = n_rand;
+    // }else{
+    //   key[i] = n_rand;
+    // }
+    key[i] = n_rand;
     printf("%c", key[i]);
   }
+  printf("\n");
 }
 
-char *start() {
+
+void start() {
   printf("%s","\t --Algoritmo codifica standard RC4-- \n");
   printf("%s","\t Inserisci il testo da cifrare:\n");
   printf("\t");
@@ -56,6 +72,16 @@ char *start() {
 int main(){
 
   start();
-  //printf("%s\n",key); --> perchè mi stampa i carrateri di input da fgets
+  printf("%s","chiave cifrata: ");
+
+  int i;
+  int xor;
+  for(i=1 ;i<strlen(buff); i++){
+    xor = buff[i] ^ key[i];
+    xor = ASCII(xor);
+    C[i] = xor;
+    printf("%c", C[i]);
+  }
+
   return 0;
 }
