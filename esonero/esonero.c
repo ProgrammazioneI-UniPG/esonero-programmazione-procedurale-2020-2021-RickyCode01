@@ -1,19 +1,23 @@
-// esonero programmazione 1 2020 Riccardo Manoni
+/* esonero programmazione 1 2020 Riccardo Manoni */
 #include<stdio.h>
-#include<time.h> //per utilizzare funzione time
-#include<stdlib.h> // per utilizzare funzione randomica
-#include<string.h> // per utilizzare memset
+#include<time.h>                  //per utilizzare funzione time
+#include<stdlib.h>                // per utilizzare funzione randomica
+#include<string.h>                // per utilizzare memset
 
-#define MAX 128 //dimensione massima per bufferoverflow
-char buff[MAX]; // array testo -> buffer caratteri
-char key[MAX]; // array int -> chiave generata
+#define MAX 128                   //dimensione massima per bufferoverflow
+char buff[MAX];                   // array testo -> buffer caratteri
+char key[MAX];                    // array int -> chiave generata
 
 char keygen(){
   time_t t;
   srand((unsigned) time(&t));
   int i;
   for(i=0; i<(sizeof(key)); i++){
-    key[i] = (rand()%128)+32;
+    int random = rand()%128;
+    if(random <= 32){             //elimino i valori superiori a 32
+      random = random + 32;
+      key[i] = random;
+    }
     printf("%c", key[i]);
   }
 }
@@ -34,12 +38,12 @@ char *start() {
   switch(scelta){
       case 1:
         printf("%s", "inserire chiave(MAX 128 caratteri): ");
-        while((scelta=getchar())!='\n' && scelta !=EOF ); // aspetta che il buffer sia vuoto
+        while((scelta=getchar())!='\n' && scelta !=EOF );                         // aspetta che il buffer sia vuoto
         fgets(key, MAX, stdin);
         //printf("%ld", strlen(key) );
         while(strlen(key) < strlen(buff)){
-          printf("la lunghezza deve essere maggiore di: %ld\n", sizeof(key));
-          memset(key, 0, MAX); //svuoto il buffer
+          printf("la lunghezza deve essere maggiore o uguale di: %ld\n", sizeof(key));
+          memset(key, 0, MAX);                                                    //svuoto il buffer
           fgets(key, MAX, stdin);
         }
         break;
