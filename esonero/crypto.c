@@ -25,12 +25,6 @@ void keygen(){
   for(i=1; i<strlen(buff); i++){
     int n_rand = rand()%128;
     n_rand = ASCII(n_rand);
-    // if(n_rand <= 32){             //elimino i valori superiori a 32
-    //   n_rand = n_rand + 32;
-    //   key[i] = n_rand;
-    // }else{
-    //   key[i] = n_rand;
-    // }
     key[i] = n_rand;
     printf("%c", key[i]);
   }
