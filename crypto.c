@@ -56,7 +56,7 @@ void start() {
         //printf("%ld", strlen(key) );
         while(strlen(key) < strlen(buff)){
           printf("la lunghezza deve essere maggiore o uguale di: %ld\n", sizeof(key));
-          memset(key, 0, MAX);                                                    //svuoto il buffer
+          memset(key, 0, MAX);                                                    //azzero l'array
           fgets(key, MAX, stdin);
         }
         break;
