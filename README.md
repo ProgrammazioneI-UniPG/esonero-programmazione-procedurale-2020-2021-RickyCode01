@@ -1,3 +1,3 @@
 # Programmazione-1
-Manoni Ricardo
+Manoni Riccardo
 Matricola:331916
