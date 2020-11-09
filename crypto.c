@@ -61,8 +61,20 @@ void menu() {
 
   switch(scelta){
       case 1:
+<<<<<<< HEAD
         while((scelta=getchar())!='\n' && scelta !=EOF);                    // aspetta che il buffer sia vuoto
         personalKey();
+=======
+        printf("\ninserire chiave(MAX 128 caratteri): ");
+        while((scelta=getchar())!='\n' && scelta !=EOF );                         // aspetta che il buffer sia vuoto
+        fgets(key, MAX, stdin);
+        //printf("%ld", strlen(key) );
+        while(strlen(key) < strlen(buff)){
+          printf("la lunghezza deve essere maggiore o uguale di: %ld\n", sizeof(key));
+          memset(key, 0, MAX);                                                    //azzero l'array
+          fgets(key, MAX, stdin);
+        }
+>>>>>>> 08909ce1061682da534c984d5d3ca4f1fd9346ea
         break;
       case 2:
         while((scelta=getchar())!='\n' && scelta !=EOF);
