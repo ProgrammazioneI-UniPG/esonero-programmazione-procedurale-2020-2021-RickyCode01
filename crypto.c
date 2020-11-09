@@ -7,7 +7,7 @@
 #define MAX 128                   // dimensione massima per bufferoverflow
 char ctext[MAX], key[MAX];        // arrays testo e chiave
 char C[MAX], D[MAX];              // arrays cifratura
-int flag = 0;                     //flag per continuare il programma
+int flag = 0;                     // flag per continuare il programma
 
 int ASCII(int num){               // funzione per togliere caratteri speciali
   if(num <= 32){
@@ -33,7 +33,7 @@ void keygen(){                    // funzione per generare numeri casuali
 void personalKey(){
   printf("\ninserire chiave(MAX 128 caratteri): ");
   fgets(key, MAX, stdin);
-  fflush(stdin);                                                            //svuoto ctexter
+  fflush(stdin);                                                            //svuoto buffer input
   while(strlen(key) < strlen(ctext)){
     printf("la lunghezza deve essere maggiore o uguale di: %ld\n", sizeof(key));
     memset(key, 0, MAX);                                                    //svuoto l'array
