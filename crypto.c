@@ -49,7 +49,7 @@ void menu() {
   printf("########################################\n");
   printf("Inserisci il testo da cifrare:\n");
   fgets(ctext, MAX, stdin);
-  while((*ctext=getchar())!='\n' && ctext !=EOF); 
+  while((*ctext=getchar())!='\n' && ctext !=EOF);                           // aspetta che il buffer sia vuoto
   printf("-----------------------------\n");
   printf("%s","\t 1. Inserire chiave personale \n");
   printf("%s","\t 2. Generare chiave casuale \n");
@@ -62,7 +62,7 @@ void menu() {
 
   switch(scelta){
       case 1:
-        while((scelta=getchar())!='\n' && scelta !=EOF);                    // aspetta che il buffer sia vuoto
+        while((scelta=getchar())!='\n' && scelta !=EOF);                    
         personalKey();
         break;
       case 2:
