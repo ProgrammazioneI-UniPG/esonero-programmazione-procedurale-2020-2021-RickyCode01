@@ -5,10 +5,9 @@
 #include<string.h>                // per utilizzare memset
 
 #define MAX 128                   // dimensione massima per bufferoverflow
-char buff[MAX];                   // array testo -> buffer caratteri
-char key[MAX];                    // array int -> chiave generata
+char buff[MAX], key[MAX];         // arrays testo e chiave
 char C[MAX], D[MAX];              // arrays cifratura
-
+int flag = 0;                     //flag per continuare il programma
 
 int ASCII(int num){               // funzione per togliere caratteri speciali
   if(num <= 32){
@@ -17,7 +16,7 @@ int ASCII(int num){               // funzione per togliere caratteri speciali
   return num;
 }
 
-void keygen(){
+void keygen(){                    // funzione per generare numeri casuali
   time_t t;
   srand((unsigned) time(&t));
   int i;
@@ -31,10 +30,23 @@ void keygen(){
   printf("\n");
 }
 
+void personalKey(){
+  printf("\ninserire chiave(MAX 128 caratteri): ");
+  fgets(key, MAX, stdin);
+  fflush(stdin);                                                            //svuoto buffer
+  while(strlen(key) < strlen(buff)){
+    printf("la lunghezza deve essere maggiore o uguale di: %ld\n", sizeof(key));
+    memset(key, 0, MAX);                                                    //svuoto l'array
+    fgets(key, MAX, stdin);
+    fflush(stdin);
+  }
+}
 
-void start() {
-  printf("\n\t--> Algoritmo codifica RC4 <--");
-  printf("\n\n");
+
+void menu() {
+  printf("########################################\n");
+  printf("|    --> Algoritmo codifica RC4 <--    |\n");
+  printf("########################################\n");
   printf("Inserisci il testo da cifrare:\n");
   fgets(buff, MAX, stdin);
   printf("-----------------------------\n");
@@ -44,48 +56,47 @@ void start() {
   printf("-------> Come si vuole procedere? ");
 
   int scelta;
-
   scanf("%d", &scelta);
   printf("-----------------------------");
 
   switch(scelta){
       case 1:
-        printf("\ninserire chiave(MAX 128 caratteri): ");
-        while((scelta=getchar())!='\n' && scelta !=EOF );                         // aspetta che il buffer sia vuoto
-        fgets(key, MAX, stdin);
-        //printf("%ld", strlen(key) );
-        while(strlen(key) < strlen(buff)){
-          printf("la lunghezza deve essere maggiore o uguale di: %ld\n", sizeof(key));
-          memset(key, 0, MAX);                                                    //svuoto il buffer
-          fgets(key, MAX, stdin);
-        }
+        while((scelta=getchar())!='\n' && scelta !=EOF);                    // aspetta che il buffer sia vuoto
+        personalKey();
         break;
       case 2:
+        while((scelta=getchar())!='\n' && scelta !=EOF);
         keygen();
         break;
       case 3:
-        printf("\n\tGoodbye =)\n");
+        printf("\nGoodbye! =)\n");
         exit(1);
   }
 }
 
 int main(){
 
-  start();
-
-  printf("stringa cifrata: ");
-  int i, xor;
-  for(i=0 ;i<strlen(buff); i++){
-    xor = buff[i] ^ key[i];
-    D[i] = xor ^ key[i];
-    xor = ASCII(xor);
-    C[i] = xor;
-    printf("%c", C[i]);
-  }
+  do{
+    menu();
+    printf("stringa cifrata: ");
+    int i, xor;
+    for(i=0 ;i<strlen(buff); i++){
+      xor = buff[i] ^ key[i];
+      D[i] = xor ^ key[i];
+      xor = ASCII(xor);
+      C[i] = xor;
+      printf("%c", C[i]);
+      }
     printf("\nstringa decifrata: ");
-  for(i=0 ;i<strlen(buff); i++){
-    printf("%c", D[i]);
-  }
+    for(i=0 ;i<strlen(buff); i++){
+      printf("%c", D[i]);
+      }
+    printf("-->vuoi continuare?(y/n) ");
+    char c;
+    while((c=getchar()) != '\n' && c != EOF){
+      if(c == 'n' || c == 'N') flag = 1;
+    }
+  }while(!flag);
 
   printf("-----------------------------\n");
 
