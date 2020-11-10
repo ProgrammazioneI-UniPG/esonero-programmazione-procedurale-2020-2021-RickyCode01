@@ -42,14 +42,8 @@ void personalKey(){
   }
 }
 
-
 void menu() {
-  printf("########################################\n");
-  printf("|    --> Algoritmo codifica RC4 <--    |\n");
-  printf("########################################\n");
-  printf("Inserisci il testo da cifrare:\n");
-  fgets(ctext, MAX, stdin);
-  while((*ctext=getchar())!='\n' && *ctext !=EOF);                           // aspetta che il buffer sia vuoto
+
   printf("-----------------------------\n");
   printf("%s","\t 1. Inserire chiave personale \n");
   printf("%s","\t 2. Generare chiave casuale \n");
@@ -61,45 +55,62 @@ void menu() {
   printf("-----------------------------");
 
   switch(scelta){
-      case 1:
-        while((scelta=getchar())!='\n' && scelta !=EOF);                    
-        personalKey();
-        break;
-      case 2:
-        while((scelta=getchar())!='\n' && scelta !=EOF);
-        keygen();
-        break;
-      case 3:
-        printf("\nGoodbye! =)\n");
-        exit(1);
+    case 1:
+    while((scelta=getchar())!='\n' && scelta !=EOF);
+    personalKey();
+    break;
+    case 2:
+    while((scelta=getchar())!='\n' && scelta !=EOF);
+    keygen();
+    break;
+    case 3:
+    printf("\nGoodbye! =)\n");
+    exit(1);
+    default:
+    printf("\ninserisci un valore corretto!\n");
+    while((scelta=getchar())!='\n' && scelta !=EOF);
+    menu();
   }
 }
 
-int main(){
-
-  do{
-    menu();
-    printf("stringa cifrata: ");
-    int i, xor;
-    for(i=0 ;i<strlen(ctext); i++){
-      xor = ctext[i] ^ key[i];
-      D[i] = xor ^ key[i];
-      xor = ASCII(xor);
-      C[i] = xor;
-      printf("%c", C[i]);
-      }
-    printf("\nstringa decifrata: ");
-    for(i=0 ;i<strlen(ctext); i++){
-      printf("%c", D[i]);
-      }
-    printf("-->vuoi continuare?(y/n) ");
-    char c;
-    while((c=getchar()) != '\n' && c != EOF){
-      if(c == 'n' || c == 'N') flag = 1;
-    }
-  }while(!flag);
-
-  printf("-----------------------------\n");
-
-  return 0;
+void start(){
+  printf("########################################\n");
+  printf("|    --> Algoritmo codifica RC4 <--    |\n");
+  printf("########################################\n");
+  printf("Inserisci il testo da cifrare:\n");
+  fgets(ctext, MAX, stdin);
+  if (strlen(ctext) == MAX-1){
+    while((*ctext = getchar())!='\n'  && *ctext != EOF);
+ }
 }
+
+  int main(){
+
+    start();
+
+    do{
+      menu();
+      printf("stringa cifrata: ");
+      int i, xor;
+      for(i=0 ;i<strlen(ctext); i++){
+        xor = ctext[i] ^ key[i];
+        D[i] = xor ^ key[i];
+        xor = ASCII(xor);
+        C[i] = xor;
+        printf("%c", C[i]);
+      }
+      printf("\nstringa decifrata: ");
+      for(i=0 ;i<strlen(ctext); i++){
+        printf("%c", D[i]);
+      }
+      printf("-->vuoi continuare?(y/n) ");
+      char c;
+      while((c=getchar()) != '\n' && c != EOF){
+        if(c == 'n' || c == 'N') flag = 1;
+      }
+    }while(!flag);
+
+    printf("-----------------------------\n");
+
+    return 0;
+  }
