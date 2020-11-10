@@ -78,6 +78,7 @@ void start(){
   printf("|    --> Algoritmo codifica RC4 <--    |\n");
   printf("########################################\n");
   printf("Inserisci il testo da cifrare:\n");
+  memset(ctext, 0, MAX); 
   fgets(ctext, MAX, stdin);
   if (strlen(ctext) == MAX-1){
     while((*ctext = getchar())!='\n'  && *ctext != EOF);
@@ -86,9 +87,8 @@ void start(){
 
   int main(){
 
-    start();
-
     do{
+      start();
       menu();
       printf("stringa cifrata: ");
       int i, xor;
